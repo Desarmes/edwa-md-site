@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edwa-Tech 🇭🇹 - Solisyon Peman Digital</title>
+    
+    <!-- Vercel Web Analytics -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Update Banner */
+        .update-banner {
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            padding: 12px 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .update-banner p { font-size: 0.9rem; margin-bottom: 0; }
+        .update-banner a { color: #FFD700; text-decoration: underline; font-weight: bold; margin-left: 5px; }
+        .update-banner a:hover { color: #fff; }
+
+        /* Visitor Counter */
+        .visitor-counter {
+            position: fixed;
+            top: 41px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeIn 1s ease 0.5s backwards;
+        }
+        .visitor-counter::before { content: '👁'; font-size: 1rem; }
+        .visitor-counter span { color: #FFD700; font-size: 1.1rem; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Music Control */
+        .music-control {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            padding: 18px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        .music-control:hover { transform: scale(1.15); box-shadow: 0 6px 30px rgba(255,215,0,0.6); }
+        .music-control.playing { animation: pulse 1.5s infinite; }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.7); }
+            50% { box-shadow: 0 0 0 15px rgba(255,215,0,0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .music-tooltip {
+            position: fixed; bottom: 80px; right: 25px;
+            background: rgba(0,0,0,0.9); padding: 8px 15px; border-radius: 8px;
+            font-size: 0.85rem; opacity: 0; transition: opacity 0.3s;
+            pointer-events: none; z-index: 999;
+        }
+        .music-control:hover + .music-tooltip { opacity: 1; }
+
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%; top: 82px; z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+        nav { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo {
+            font-size: 2rem; font-weight: bold;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: #fff; text-decoration: none; transition: color 0.3s; font-weight: 500; }
+        .nav-links a:hover { color: #00d2ff; }
+
+        /* Hero Section */
+        .hero { margin-top: 166px; padding: 100px 20px; text-align: center; background: rgba(0,0,0,0.2); }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; animation: fadeInUp 1s ease; }
+        .hero p { font-size: 1.3rem; margin-bottom: 30px; opacity: 0.9; animation: fadeInUp 1s ease 0.2s backwards; }
+        .hero-subtitle { font-size: 1.1rem; margin-bottom: 40px; opacity: 0.85; animation: fadeInUp 1s ease 0.3s backwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Buttons */
+        .btn-container { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; animation: fadeInUp 1s ease 0.4s backwards; }
+        .btn { padding: 14px 28px; border: none; border-radius: 50px; font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-block; font-weight: 600; }
+        .btn-primary { background: linear-gradient(45deg, #00d2ff, #3a7bd5); color: #fff; box-shadow: 0 4px 15px rgba(0,210,255,0.4); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(0,210,255,0.6); }
+        .btn-secondary { background: transparent; color: #fff; border: 2px solid #fff; }
+        .btn-secondary:hover { background: #fff; color: #1e3c72; }
+        .btn-whatsapp { background: #25D366; color: #fff; box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
+        .btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(37,211,102,0.6); }
+        .btn-channel { background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; box-shadow: 0 4px 15px rgba(37,211,102,0.5); animation: glow 2s infinite; }
+        @keyframes glow { 0%, 100% { box-shadow: 0 4px 15px rgba(37,211,102,0.4); } 50% { box-shadow: 0 4px 25px rgba(37,211,102,0.7); } }
+        .btn-call { background: linear-gradient(45deg, #FF6B6B, #EE5A5A); color: #fff; }
+        .btn-email { background: linear-gradient(45deg, #667eea, #764ba2); color: #fff; }
+        .btn-youtube { background: linear-gradient(45deg, #FF0000, #CC0000); color: #fff; box-shadow: 0 4px 15px rgba(255,0,0,0.4); }
+        .btn-youtube:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(255,0,0,0.6); }
+
+        /* Sections Styling */
+        .qr-section { padding: 80px 20px; background: rgba(255,255,255,0.05); }
+        .qr-container { max-width: 600px; margin: 0 auto; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); border-radius: 20px; padding: 40px; text-align: center; }
+        .qr-code { width: 280px; height: 280px; margin: 30px auto; background: #fff; padding: 15px; border-radius: 15px; display: flex; align-items: center; justify-content: center; }
+        .qr-tag { font-size: 1.5rem; color: #FFD700; margin: 20px 0; font-weight: bold; }
+
+        .features { padding: 80px 20px; }
+        .features h2 { text-align: center; font-size: 2.5rem; margin-bottom: 60px; }
+        .features-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .feature-card { background: rgba(255,255,255,0.1); padding: 40px; border-radius: 20px; text-align: center; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+        .feature-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.15); }
+        .feature-icon { font-size: 3rem; margin-bottom: 20px; }
+
+        footer { background: rgba(0,0,0,0.5); padding: 40px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
+        .social-links { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
+        .social-links a { color: #fff; padding: 10px 18px; border-radius: 25px; background: rgba(255,255,255,0.1); text-decoration: none; transition: 0.3s; }
+        .channel-highlight { background: linear-gradient(45deg, #25D366, #128C7E) !important; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .nav-links { display: none; }
+            .hero { margin-top: 145px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="update-banner">
+        <p>📢 Swiv tout nouvèl ak update yo sou <a href="https://whatsapp.com/channel/0029VaX7FVI2Jl8Ek9Ce383k" target="_blank">WhatsApp Channel nou an</a>!</p>
+    </div>
+
+    <div class="visitor-counter" id="visitorCounter">
+        <span id="visitorCount">0</span> vizitè
+    </div>
+
+    <div class="music-control" id="musicControl" onclick="toggleMusic()">
+        <span id="musicIcon">🎵</span>
+    </div>
+    <div class="music-tooltip">🎧 Klike pou jwe mizik</div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://image2url.com/r2/default/audio/1772050644739-59dc7336-a230-4ae7-9a34-19ef4a0b50d3.mp3" type="audio/mpeg">
+    </audio>
+
+    <header>
+        <nav>
+            <div class="logo">EdwaTech 🇭🇹</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Akèy</a></li>
+                <li><a href="#qr">Peye</a></li>
+                <li><a href="#features">Sèvis</a></li>
+                <li><a href="#catalogue">Katalòg</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="accueil">
+        <h1>Byenveni nan EdwaTech</h1>
+        <p>Solisyon peman digital rapid, sekirize ak fasil pou Ayiti</p>
+        <p class="hero-subtitle">🔔 Swiv nou sou WhatsApp ak YouTube pou tout update!</p>
+        <div class="btn-container">
+            <a href="#" class="btn btn-primary" onclick="scrollToQR()">Fè Yon Peman</a>
+            <a href="https://wa.me/p/25435363352832564/50943099723" target="_blank" class="btn btn-whatsapp">📱 Katalòg</a>
+            <a href="https://whatsapp.com/channel/0029VaX7FVI2Jl8Ek9Ce383k" target="_blank" class="btn btn-channel">📢 Channel</a>
+            <a href="https://www.youtube.com/@Edwa-Tech-HT-dev" target="_blank" class="btn btn-youtube">▶️ YouTube</a>
+        </div>
+    </section>
+
+    <section class="qr-section" id="qr">
+        <div class="qr-container">
+            <h2>Eskane QR Code pou Peye</h2>
+            <p>Pwosesis la pran anviwon 10 minit</p>
+            <div class="qr-code"><div id="qrcode"></div></div>
+            <div class="qr-tag">#Tha4003</div>
+            <button class="btn btn-secondary" onclick="copyTag()">📋 Kopi Tag</button>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Poukisa Chwazi Nou?</h2>
+        <div class="features-grid">
+            <div class="feature-card"><div class="feature-icon">⚡</div><h3>Rapid</h3><p>Peman yo fèt imedyatman.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔒</div><h3>Sekirize</h3><p>Done ou yo pwoteje 100%.</p></div>
+            <div class="feature-card"><div class="feature-icon">📱</div><h3>Fasil</h3><p>Yon senp eskanè sifi.</p></div>
+        </div>
+    </section>
+
+    <section class="qr-section" id="catalogue" style="background: rgba(0,0,0,0.3);">
+        <div class="qr-container">
+            <h2>Katalòg ak Rezo Sosyo</h2>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+                <a href="https://wa.me/p/25435363352832564/50943099723" target="_blank" class="btn btn-whatsapp">🛍️ Katalòg</a>
+                <a href="https://www.youtube.com/@Edwa-Tech-HT-dev" target="_blank" class="btn btn-youtube">▶️ YouTube</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="contact">
+        <h2>Kontakte Nou</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>WhatsApp</h3>
+                <a href="https://wa.me/message/LVB523ITVYMCF1" target="_blank" class="btn btn-call">📱 Rele Nou</a>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📧</div>
+                <h3>Imèl</h3>
+                <a href="mailto:bkale4997@gmail.com" class="btn btn-email">✉️ Ekri Nou</a>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">▶️</div>
+                <h3>YouTube</h3>
+                <a href="https://www.youtube.com/@Edwa-Tech-HT-dev" target="_blank" class="btn btn-youtube">🎬 Abòne</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">EdwaTech 🇭🇹</div>
+        <div class="social-links">
+            <a href="https://wa.me/p/25435363352832564/50943099723" target="_blank">📦 Katalòg</a>
+            <a href="https://whatsapp.com/channel/0029VaX7FVI2Jl8Ek9Ce383k" target="_blank" class="channel-highlight">📢 Channel</a>
+            <a href="https://www.youtube.com/@Edwa-Tech-HT-dev" target="_blank">▶️ YouTube</a>
+        </div>
+        <div class="copyright">
+            <p>© EdwaTech 🇭🇹 - 2025-2026 | Edwa-Tech 🤝 Steevens</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. QR Code
+        new QRCode(document.getElementById("qrcode"), { text: "#Tha4003", width: 250, height: 250 });
+
+        // 2. Visitor Counter (localStorage based)
+        function initCounter() {
+            const countEl = document.getElementById('visitorCount');
+            let count = localStorage.getItem('edwatech_v');
+            if(!count) { count = 1540; } else { count = parseInt(count) + 1; }
+            localStorage.setItem('edwatech_v', count);
+            
+            // Animation
+            let current = 0;
+            const step = Math.ceil(count / 50);
+            const timer = setInterval(() => {
+                current += step;
+                if(current >= count) { countEl.textContent = count.toLocaleString(); clearInterval(timer); }
+                else { countEl.textContent = current.toLocaleString(); }
+            }, 30);
+        }
+        initCounter();
+
+        // 3. Music
+        const music = document.getElementById('bgMusic');
+        let isPlaying = false;
+        function toggleMusic() {
+            if (isPlaying) { music.pause(); document.getElementById('musicIcon').textContent = '🎵'; } 
+            else { music.play(); document.getElementById('musicIcon').textContent = '🔇'; }
+            isPlaying = !isPlaying;
+            document.getElementById('musicControl').classList.toggle('playing');
+        }
+
+        // 4. Utils
+        function copyTag() { navigator.clipboard.writeText('#Tha4003').then(() => alert('✅ Tag kopi!')); }
+        function scrollToQR() { document.getElementById('qr').scrollIntoView({ behavior: 'smooth' }); }
+    </script>
+</body>
+</html>
